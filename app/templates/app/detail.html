@@ -1,0 +1,93 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chi tiết sản phẩm</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        .back-icon {
+            margin-right: 5px; /* Khoảng cách giữa icon và chữ */
+        }
+
+        .detail-content {
+            background-color: #f8f9fa; /* Màu nền nhẹ cho phần chi tiết */
+            padding: 15px; /* Khoảng cách bên trong */
+            border-radius: 5px; /* Bo góc nhẹ */
+            font-size: 14px; /* Kích thước chữ nhỏ hơn một chút */
+            line-height: 1.6; /* Giãn dòng để dễ đọc */
+            margin-top: 10px;
+        }
+
+        .detail-content p {
+            margin-bottom: 10px; /* Khoảng cách giữa các đoạn văn */
+        }
+
+        .detail-content ul {
+            padding-left: 20px; /* Khoảng cách lề cho danh sách */
+        }
+
+        .detail-content ul li {
+            list-style-type: disc; /* Định dạng danh sách */
+            margin-bottom: 5px; /* Khoảng cách giữa các mục trong danh sách */
+        }
+    </style>
+</head>
+<body>
+    {% block register %}
+    {% for product in products %}
+    <div class="container mt-5 mb-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="images p-3">
+                                <div class="text-center p-4">
+                                    <img id="main-image" src="{{ product.ImageURL }}" width="455" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="product p-4">
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <a href="{% url 'home' %}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-arrow-left back-icon"></i> <!-- Icon mũi tên -->
+                                        <span class="ml-1">Trở về trang chủ</span>
+                                    </a>
+                                </div>
+                                <div class="mt-4 mb-3"> 
+                                    <span class="text-uppercase text-muted brand">Sản phẩm</span>
+                                    <h5 class="text-uppercase">{{ product.name }}</h5>
+                                    <div class="price d-flex flex-row align-items-center">
+                                        <span class="act-price" style="color: red; font-weight: bold;">${{ product.price | floatformat:2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="product-details mt-4">
+                                    <h6 class="text-uppercase text-muted">Thông tin chi tiết sản phẩm</h6>
+                                    <div class="detail-content">
+                                        {{ product.detail|linebreaks }}
+                                    </div>
+                                </div>
+                                <div class="cart mt-4 align-items-center">
+                                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-success add-btn update-cart">
+                                        <i class="fas fa-cart-plus mr-1"></i>Thêm vào giỏ hàng
+                                    </button>
+                                    <i class="fa fa-heart text-muted"></i>
+                                    <i class="fa fa-share-alt text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock register %}
+</body>
+</html>
